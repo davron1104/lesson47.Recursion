@@ -48,10 +48,17 @@ let students = {
         pro:[{
             name: 'Sam',
             progress: 10
-        }] 
+        }],
+        semi: {
+            students: [{
+                name: 'Test',
+                progress: 100
+            }]
+        } 
         }
 };
 
+// 1)
 function getTotalProgressByIteration (data) {
     let total = 0;
     let students = 0;
@@ -73,12 +80,32 @@ function getTotalProgressByIteration (data) {
             }
         }
     }
-
-
     return total / students;
 } 
+// // console.log(getTotalProgressByIteration(students));
 
-console.log(getTotalProgressByIteration(students));
+
+// // 2)
+function getTotalProgressByRecursion(data) {
+    if (Array.isArray(data)){
+        let total = 0;
+        
+    for(let i = 0; i < data.length; i++){
+        total += data[i].progress;
+        }
+        return [total, data.length];
+    } else {
+        let total = [0, 0];
+        for (let subData of Object.values(data)){
+            const subDataArray = getTotalProgressByRecursion(subData);
+            total[0] += subDataArray[0]; 
+            total[1] += subDataArray[1]; 
+        }
+        return total;
+    }
+}
+const result = getTotalProgressByRecursion(students);
+console.log(result[0]/result[1]);
 
 
 // Пример для Object.values()
@@ -91,3 +118,60 @@ console.log(getTotalProgressByIteration(students));
 // };
 
 // console.log(Object.values(person));
+
+
+// Объявление функции(Function Declaration)
+// Рекурсия
+
+// function getSum(numOne, numTwo) {
+//     let result = 1;
+//     //умножаем result на numOne numTwo раз в цикле
+//     for(let i = 0; i < numTwo; i++) {
+//         result *= numOne;
+//     }  
+//     return result;
+// }
+
+// console.log(getSum(2, 3));
+
+// function getSum(numOne, numTwo) {
+//     if (numTwo == 1) {
+//         return numOne;
+//     } else {
+//         return numOne * getSum(numOne, numTwo - 1);
+//     }
+// }
+// console.log(getSum(2, 3));
+
+let count = 0;
+function recursion() {
+    if (count === 5) {
+        return 'Done'; 
+    }
+    count++;
+    return recursion();
+}
+
+console.log(recursion());
+
+let number = Math.pow(3, 5);
+console.log(number);
+
+function pow(x, y) {
+    if (y === 0) {
+        return 1;
+    } else {
+        return x * pow(x, y - 1);
+    }
+}
+
+console.log(pow(2, 2));
+console.log(pow(2, 3));
+console.log(pow(2, 4));
+console.log(pow(3, 2));
+
+
+
+
+
+
